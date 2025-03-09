@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "ivan02082004",
+    "database": "test-areal",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "ivan02082004",
+    "database": "test-areal",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "ivan02082004",
+    "database": "test-areal",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
