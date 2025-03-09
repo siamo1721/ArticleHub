@@ -1,4 +1,5 @@
-const { Comment } = require('../models');
+const { Comment, Article } = require('../models');
+const { Op } = require('sequelize');
 
 exports.createComment = async (req, res) => {
     try {
@@ -51,6 +52,12 @@ exports.deleteComment = async (req, res) => {
 exports.getCommentsByPeriod = async (req, res) => {
     try {
         const { dateFrom, dateTo } = req.query;
+        console.log('Fetching comments from:', dateFrom, 'to:', dateTo);
+
+        if (!dateFrom || !dateTo) {
+            return res.status(400).json({ error: 'dateFrom and dateTo are required' });
+        }
+
         const comments = await Comment.findAll({
             where: {
                 createdAt: {
@@ -59,8 +66,27 @@ exports.getCommentsByPeriod = async (req, res) => {
             },
             include: [{ model: Article, attributes: ['title'] }],
         });
-        res.status(200).json(comments);
+
+        const groupedComments = comments.reduce((acc, comment) => {
+            const articleId = comment.ArticleId;
+            if (!acc[articleId]) {
+                acc[articleId] = {
+                    articleTitle: comment.Article.title,
+                    comments: [],
+                };
+            }
+            acc[articleId].comments.push({
+                id: comment.id,
+                text: comment.text,
+                createdAt: comment.createdAt,
+                updatedAt: comment.updatedAt,
+            });
+            return acc;
+        }, {});
+
+        res.status(200).json(groupedComments);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+
 };
