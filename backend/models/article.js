@@ -1,18 +1,18 @@
 'use strict';
 const {
-  Model
+    Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Article extends Model {
-    static associate(models) {
+    class Article extends Model {
+        static associate(models) {
+        }
     }
-  }
-  Article.init({
-    title: DataTypes.STRING,
-    content: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Article',
-  });
-  return Article;
+    Article.init({
+        title: DataTypes.STRING,
+        content: DataTypes.TEXT
+    }, {
+        sequelize,
+        modelName: 'Article',
+    });
+    return Article;
 };
