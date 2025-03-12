@@ -1,10 +1,10 @@
 import { createStore } from 'vuex'
-import article from '/src/store/modules/articles'
-import comments from '/src/store/modules/comments'
+import articles from './modules/articles'
+import comments from './modules/comments'
 
 export default createStore({
     modules: {
-        article,
+        articles,
         comments,
     },
 })

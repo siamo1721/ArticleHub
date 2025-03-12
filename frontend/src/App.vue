@@ -1,13 +1,12 @@
 <template>
-<ArtComponent/>
+  <ArticleTable/>
 </template>
 
 <script>
-import ArtComponent from './components/ArtComponent.vue'
-
+import ArticleTable from './components/ArticleTable.vue'
 export default {
   components: {
-    ArtComponent
+    ArticleTable,
   }
 };
 </script>

@@ -16,11 +16,11 @@ export default{
      },
       async updateComment({commit}, {id, commentId, comment}){
          const response = await api.updateComment(id, commentId, comment);
-         commit('updateComment', {id, commentId, comment});
+         commit('updateComment', response.data);
      },
       async deleteComment({commit}, {id, commentId}){
          const response = await api.deleteComment(id, commentId);
-         commit('deleteComment', {id, commentId});
+         commit('deleteComment', response.data);
      },
       async getCommentsByPeriod({commit}, {startDate, endDate}){
          const response = await api.getCommentsByPeriod(startDate, endDate);
@@ -35,7 +35,9 @@ export default{
             state.comments.push(comment);
         },
         updateComment(state, {id, commentId, comment}){
-            state.comments.findIndex((c) => c.id === commentId && c.ArticleId === id);
+             state.comments.findIndex((c) => c.id === commentId && c.ArticleId === id);
+             state.comments.splice(comment);
+
         },
         deleteComment(state, {id, commentId}){
             state.comments = state.comments.filter((c) => c.id!== commentId && c.ArticleId === id);
