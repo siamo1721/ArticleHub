@@ -14,6 +14,10 @@
       <td>{{ article.content }}</td>
       <td>{{ formatDate(article.createdAt) }}</td>
       <td>{{ formatDate(article.updatedAt) }}</td>
+      <td>
+        <my-button @click="editArticle(article.id)">Изменить</my-button>
+        <my-button @click="deleteArticle(article.id)">Удалить</my-button>
+      </td>
     </tr>
     </tbody>
   </v-table>
@@ -32,7 +36,9 @@ export default {
       const date = new Date(dateString);
       return date.toLocaleString();
     },
+
   },
+
   mounted() {
     this.getArticles();
   },
@@ -40,5 +46,5 @@ export default {
 </script>
 
 <style>
-/* Стили, если нужны */
+
 </style>
