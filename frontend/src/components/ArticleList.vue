@@ -18,6 +18,7 @@
       <td>
         <v-btn small color="error" @click="deleteArticle(article.id)">Удалить</v-btn>
         <v-btn small color="primary" @click="editArticle(article.id)">Редактировать</v-btn>
+        <v-btn  @click="ArticleShow(article.id)">Просмотреть</v-btn>
       </td>
     </tr>
     </tbody>
@@ -40,6 +41,9 @@ export default {
     editArticle(id) {
       this.$router.push(`/edit/${id}`);
     },
+    ArticleShow(id){
+      this.$router.push(`/show/${id}`);
+    }
   },
   mounted() {
     this.getArticles();
