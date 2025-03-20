@@ -1,33 +1,38 @@
 <template>
   <v-container>
-    <v-card class="mb-6">
-      <v-card-title class="headline">
-        {{ currentArticle.title }}
-      </v-card-title>
-      <v-card-text>
-        <p>{{ currentArticle.content }}</p>
-        <p><strong>Дата добавления:</strong> {{ formatDate(currentArticle.createdAt) }}</p>
-        <p><strong>Дата изменения:</strong> {{ formatDate(currentArticle.updatedAt) }}</p>
-      </v-card-text>
-    </v-card>
-    <v-card>
-      <v-card-title class="headline">
-        Комментарии
-      </v-card-title>
-      <v-card-text>
-        <v-list>
-          <v-list-item v-for="comment in comments" :key="comment.id">
-            <v-list-item-content>
-              <v-list-item-title>{{ comment.text }}</v-list-item-title>
-              <v-list-item-subtitle>
-                {{ formatDate(comment.createdAt) }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-    </v-container>
+    <template v-if="currentArticle">
+      <v-card class="mb-6">
+        <v-card-title class="headline">
+          {{ currentArticle.title }}
+        </v-card-title>
+        <v-card-text>
+          <p>{{ currentArticle.content }}</p>
+          <p><strong>Дата добавления:</strong> {{ formatDate(currentArticle.createdAt) }}</p>
+          <p><strong>Дата изменения:</strong> {{ formatDate(currentArticle.updatedAt) }}</p>
+        </v-card-text>
+      </v-card>
+      <v-card>
+        <v-card-title class="headline">
+          Комментарии
+        </v-card-title>
+        <v-card-text>
+          <v-list>
+            <v-list-item v-for="comment in comments" :key="comment.id">
+              <v-list-item-content>
+                <v-list-item-title>{{ comment.text }}</v-list-item-title>
+                <v-list-item-subtitle>
+                  {{ formatDate(comment.createdAt) }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+      </v-card>
+    </template>
+    <template v-else>
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </template>
+  </v-container>
 </template>
 
 <script>
