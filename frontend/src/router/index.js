@@ -1,21 +1,28 @@
-import ArticleList from "@/components/ArticleList.vue";
-import ArticleForm from "@/components/ArticleForm.vue";
-import {createRouter , createWebHistory} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+import MainPage from '@/pages/MainPage.vue';
+import CreateArticlePage from '@/pages/CreateArticlePage.vue';
+import EditArticlePage from '@/pages/EditArticlePage.vue';
 
 const routes = [
     {
         path: '/',
-        component: ArticleList
+        component: MainPage,
     },
     {
         path: '/create',
-        component: ArticleForm
-    }
+        component: CreateArticlePage,
+    },
+    {
+        path: '/edit/:id',
+        component: EditArticlePage,
+    },
+
+
 ];
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
 });
 
 export default router;

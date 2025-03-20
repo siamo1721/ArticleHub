@@ -6,6 +6,7 @@
       <th>Содержание</th>
       <th>Дата добавления</th>
       <th>Дата изменения</th>
+      <th>Действия</th>
     </tr>
     </thead>
     <tbody>
@@ -15,8 +16,8 @@
       <td>{{ formatDate(article.createdAt) }}</td>
       <td>{{ formatDate(article.updatedAt) }}</td>
       <td>
-        <my-button @click="editArticle(article.id)">Изменить</my-button>
-        <my-button @click="deleteArticle(article.id)">Удалить</my-button>
+        <v-btn small color="error" @click="deleteArticle(article.id)">Удалить</v-btn>
+        <v-btn small color="primary" @click="editArticle(article.id)">Редактировать</v-btn>
       </td>
     </tr>
     </tbody>
@@ -31,14 +32,15 @@ export default {
     ...mapState('articles', ['articles']),
   },
   methods: {
-    ...mapActions('articles', ['getArticles']),
+    ...mapActions('articles', ['getArticles', 'deleteArticle', 'updateArticle']),
     formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();
     },
-
+    editArticle(id) {
+      this.$router.push(`/edit/${id}`);
+    },
   },
-
   mounted() {
     this.getArticles();
   },

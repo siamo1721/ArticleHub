@@ -2,42 +2,37 @@
   <v-form>
     <v-text-field v-model="title" label="Название статьи" required></v-text-field>
     <v-textarea class="text" v-model="content" label="Содержание статьи" required></v-textarea>
-    <my-button @click = "saveArticle">Сохранить</my-button>
+    <my-button @click="saveArticle">Сохранить</my-button>
   </v-form>
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
+import { mapActions } from 'vuex';
 
 export default {
-
-
   data() {
     return {
       title: '',
-      content: ''
-    }
-  },
-  computed: {
-    ...mapState('articles', ['articles']),
+      content: '',
+    };
   },
   methods: {
     ...mapActions('articles', ['createArticle']),
     async saveArticle() {
+      if (!this.title || !this.content) {
+        alert('Заполните все поля!');
+        return;
+      }
+
       const article = {
         title: this.title,
         content: this.content,
       };
       await this.createArticle(article);
-      this.title = '';
-      this.content = '';
-
+      this.$router.push('/');
     },
   },
-  mounted() {
-    this.createArticle();
-  },
-}
+};
 </script>
 
 <style>
