@@ -11,6 +11,7 @@
           <p><strong>Дата изменения:</strong> {{ formatDate(currentArticle.updatedAt) }}</p>
         </v-card-text>
       </v-card>
+      <comment-form></comment-form>
       <v-card>
         <v-card-title class="headline">
           Комментарии
@@ -19,7 +20,9 @@
           <v-list>
             <v-list-item v-for="comment in comments" :key="comment.id">
               <v-list-item-content>
-                <v-list-item-title>{{ comment.text }}</v-list-item-title>
+                <v-list-item-title style="white-space: normal; word-break: break-word">
+                  {{ comment.text }}
+                </v-list-item-title>
                 <v-list-item-subtitle>
                   {{ formatDate(comment.createdAt) }}
                 </v-list-item-subtitle>
@@ -37,8 +40,12 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import CommentForm from '@/components/CommentForm.vue';
 
 export default {
+  components: {
+    CommentForm
+  },
   computed: {
     ...mapState('articles', ['currentArticle']),
     ...mapState('comments', ['comments']),
@@ -58,7 +65,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>

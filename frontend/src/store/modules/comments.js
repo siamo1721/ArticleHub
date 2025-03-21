@@ -40,8 +40,8 @@ export default {
             commit('setComments', response.data);
         },
 
-        async createComment({ commit }, { id, comment }) {
-            const response = await api.createComment(id, comment);
+        async createComment({ commit }, { articleId, comment }) {
+            const response = await api.createComment(articleId, comment);
             commit('createComment', response.data);
         },
 

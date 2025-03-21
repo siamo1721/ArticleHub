@@ -11,14 +11,14 @@
     </thead>
     <tbody>
     <tr v-for="article in articles" :key="article.id">
-      <td>{{ article.title }}</td>
-      <td>{{ article.content }}</td>
+      <td class="title-cell">{{ truncateText(article.title, 40) }}</td>
+      <td class="content-cell">{{ truncateText(article.content, 60) }}</td>
       <td>{{ formatDate(article.createdAt) }}</td>
       <td>{{ formatDate(article.updatedAt) }}</td>
       <td>
-        <v-btn small color="error" @click="deleteArticle(article.id)">Удалить</v-btn>
-        <v-btn small color="primary" @click="editArticle(article.id)">Редактировать</v-btn>
-        <v-btn  @click="ArticleShow(article.id)">Просмотреть</v-btn>
+        <my-button @click="deleteArticle(article.id)">Удалить</my-button>
+        <my-button  @click="editArticle(article.id)">Редактировать</my-button >
+        <my-button  @click="ArticleShow(article.id)">Просмотреть</my-button >
       </td>
     </tr>
     </tbody>
@@ -27,8 +27,10 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import MyButton from "@/components/UI/MyButton.vue";
 
 export default {
+  components: {MyButton},
   computed: {
     ...mapState('articles', ['articles']),
   },
@@ -43,6 +45,11 @@ export default {
     },
     ArticleShow(id){
       this.$router.push(`/show/${id}`);
+    },
+    truncateText(text, maxLength) {
+      return text.length > maxLength
+          ? text.substring(0, maxLength) + '...'
+          : text;
     }
   },
   mounted() {

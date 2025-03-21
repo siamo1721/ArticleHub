@@ -8,8 +8,10 @@
 
 <script>
 import { mapActions } from 'vuex';
+import MyButton from "@/components/UI/MyButton.vue";
 
 export default {
+  components: {MyButton},
   data() {
     return {
       title: '',

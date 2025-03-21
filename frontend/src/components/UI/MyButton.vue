@@ -1,5 +1,5 @@
 <template>
-  <v-btn>
+  <v-btn class ="my-btn" variant="outlined">
     <slot></slot>
   </v-btn>
 </template>
@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style>
-
+.my-btn{
+  margin: 0.5em;
+}
 </style>
