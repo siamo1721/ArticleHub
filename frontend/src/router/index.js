@@ -21,9 +21,6 @@ const routes = [
         path: '/show/:id',
         component: CommentsPage,
     },
-    {
-
-    },
 
 ];
 

@@ -22,11 +22,25 @@
               <v-list-item-content>
                 <v-list-item-title style="white-space: normal; word-break: break-word">
                   {{ comment.text }}
+                  <my-button @click="deleteComment(comment)">Удалить</my-button>
+                  <my-button @click="startEdit(comment)">Редактировать</my-button>
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                  {{ formatDate(comment.createdAt) }}
+                 <span>
+                    <strong>Создан:</strong> {{ formatDate(comment.createdAt) }}
+                  </span>
+                  <span> | </span>
+                  <span>
+                    <strong>Обновлён:</strong> {{ formatDate(comment.updatedAt) }}
+                  </span>
                 </v-list-item-subtitle>
               </v-list-item-content>
+              <comment-edit
+                  v-if="editingCommentId === comment.id"
+                  :comment="comment"
+                  @save="saveComment"
+                  @cancel="cancelEdit"
+              ></comment-edit>
             </v-list-item>
           </v-list>
         </v-card-text>
@@ -41,10 +55,19 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import CommentForm from '@/components/CommentForm.vue';
+import MyButton from "@/components/UI/MyButton.vue";
+import CommentEdit from "@/components/CommentEdit.vue";
 
 export default {
   components: {
-    CommentForm
+    MyButton,
+    CommentForm,
+    CommentEdit,
+  },
+  data() {
+    return {
+      editingCommentId: null,
+    };
   },
   computed: {
     ...mapState('articles', ['currentArticle']),
@@ -52,10 +75,32 @@ export default {
   },
   methods: {
     ...mapActions('articles', ['getArticle']),
-    ...mapActions('comments', ['getComments']),
+    ...mapActions('comments', ['getComments', 'deleteComment', 'updateComment']),
     formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();
+    },
+    deleteComment(comment) {
+      this.$store.dispatch('comments/deleteComment', {
+        id: this.currentArticle.id,
+        commentId: comment.id,
+      });
+    },
+
+    startEdit(comment) {
+      this.editingCommentId = comment.id;
+    },
+
+    async saveComment({ id, text }) {
+      await this.updateComment({
+        id: this.currentArticle.id,
+        commentId: id,
+        comment: text,
+      });
+      this.editingCommentId = null;
+    },
+    cancelEdit() {
+      this.editingCommentId = null;
     },
   },
   async mounted() {
