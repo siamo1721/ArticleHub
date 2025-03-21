@@ -1,7 +1,7 @@
 <template>
   <v-form @submit.prevent="saveArticle">
     <v-text-field v-model="title" label="Название статьи" required></v-text-field>
-    <v-textarea v-model="content" label="Содержание статьи" required></v-textarea>
+    <my-text-area v-model="content" label="Содержание статьи" required></my-text-area>
     <my-button type="submit" color="primary">Сохранить</my-button >
     <my-button @click="cancel" color="secondary">Отмена</my-button >
   </v-form>
@@ -10,9 +10,10 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import MyButton from "@/components/UI/MyButton.vue";
+import MyTextArea from "@/components/UI/MyTextarea.vue";
 
 export default {
-  components: {MyButton},
+  components: {MyTextArea, MyButton},
   data() {
     return {
       title: '',

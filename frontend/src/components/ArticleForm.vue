@@ -1,7 +1,7 @@
 <template>
   <v-form>
     <v-text-field v-model="title" label="Название статьи" required></v-text-field>
-    <v-textarea class="text" v-model="content" label="Содержание статьи" required></v-textarea>
+    <my-text-area class="text" v-model="content" label="Содержание статьи" required></my-text-area>
     <my-button @click="saveArticle">Сохранить</my-button>
   </v-form>
 </template>
@@ -9,9 +9,10 @@
 <script>
 import { mapActions } from 'vuex';
 import MyButton from "@/components/UI/MyButton.vue";
+import MyTextArea from "@/components/UI/MyTextarea.vue";
 
 export default {
-  components: {MyButton},
+  components: {MyTextArea, MyButton},
   data() {
     return {
       title: '',

@@ -3,12 +3,12 @@
     <v-card-title>Добавить комментарий</v-card-title>
     <v-card-text>
       <v-form @submit.prevent="submitComment">
-        <v-textarea
+        <my-text-area
             v-model="commentText"
             label="Ваш комментарий"
             required
             outlined
-        ></v-textarea>
+        ></my-text-area>
         <my-button type="submit" color="primary">Отправить</my-button>
       </v-form>
     </v-card-text>
@@ -18,9 +18,10 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import MyButton from "@/components/UI/MyButton.vue";
+import MyTextArea from "@/components/UI/MyTextarea.vue";
 
 export default {
-  components: {MyButton},
+  components: {MyTextArea, MyButton},
   data() {
     return {
       commentText: '',
