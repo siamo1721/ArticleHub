@@ -5,6 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
     class Article extends Model {
         static associate(models) {
+            Article.hasMany(models.Comment, { foreignKey: 'ArticleId', onDelete: 'CASCADE' });
         }
     }
     Article.init({

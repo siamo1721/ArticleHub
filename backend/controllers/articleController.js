@@ -1,4 +1,5 @@
-const { Article } = require('../models');
+const { Article , Comment} = require('../models');
+const { sequelize } = require('../models');
 
 exports.createArticle = async (req, res) => {
     try {
@@ -47,17 +48,35 @@ exports.updateArticle = async (req, res) => {
     }
 };
 
+
 exports.deleteArticle = async (req, res) => {
+    const { id } = req.params;
+
+    const transaction = await sequelize.transaction();
+
     try {
-        const deleted = await Article.destroy({
-            where: { id: req.params.id },
+        await Comment.destroy({
+            where: {
+                ArticleId: id,
+            },
+            transaction,
         });
-        if (deleted) {
-            res.status(204).send();
-        } else {
-            res.status(404).json({ error: 'Article not found' });
-        }
+
+        await Article.destroy({
+            where: {
+                id,
+            },
+            transaction,
+        });
+
+        await transaction.commit();
+        console.log('Транзакция успешно завершена.');
+
+        res.status(200).json({ message: 'Статья и связанные комментарии успешно удалены.' });
     } catch (error) {
+        console.error('Ошибка при удалении статьи:', error);
+
+        await transaction.rollback();
         res.status(500).json({ error: error.message });
     }
 };
