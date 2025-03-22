@@ -3,6 +3,7 @@ import MainPage from '@/pages/MainPage.vue';
 import CreateArticlePage from '@/pages/CreateArticlePage.vue';
 import EditArticlePage from '@/pages/EditArticlePage.vue';
 import CommentsPage from "@/pages/CommentsPage.vue";
+import CommentFilterPage from "@/pages/CommentFilterPage.vue";
 
 const routes = [
     {
@@ -21,6 +22,10 @@ const routes = [
         path: '/show/:id',
         component: CommentsPage,
     },
+    {
+        path: '/filter',
+        component : CommentFilterPage
+    }
 
 ];
 

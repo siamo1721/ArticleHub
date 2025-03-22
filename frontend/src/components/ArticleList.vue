@@ -1,28 +1,34 @@
 <template>
-  <v-table>
-    <thead>
-    <tr>
-      <th>Название</th>
-      <th>Содержание</th>
-      <th>Дата добавления</th>
-      <th>Дата изменения</th>
-      <th>Действия</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr v-for="article in articles" :key="article.id">
-      <td class="title-cell">{{ truncateText(article.title, 40) }}</td>
-      <td class="content-cell">{{ truncateText(article.content, 60) }}</td>
-      <td>{{ formatDate(article.createdAt) }}</td>
-      <td>{{ formatDate(article.updatedAt) }}</td>
-      <td>
-        <my-button @click="deleteArticle(article.id)">Удалить</my-button>
-        <my-button  @click="editArticle(article.id)">Редактировать</my-button >
-        <my-button  @click="ArticleShow(article.id)">Просмотреть</my-button >
-      </td>
-    </tr>
-    </tbody>
-  </v-table>
+  <div>
+    <v-table v-if="articles.length > 0">
+      <thead>
+      <tr>
+        <th>Название</th>
+        <th>Содержание</th>
+        <th>Дата добавления</th>
+        <th>Дата изменения</th>
+        <th>Действия</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="article in articles" :key="article.id">
+        <td class="title-cell">{{ truncateText(article.title, 40) }}</td>
+        <td class="content-cell">{{ truncateText(article.content, 60) }}</td>
+        <td>{{ formatDate(article.createdAt) }}</td>
+        <td>{{ formatDate(article.updatedAt) }}</td>
+        <td>
+          <my-button @click="deleteArticle(article.id)">Удалить</my-button>
+          <my-button @click="editArticle(article.id)">Редактировать</my-button>
+          <my-button @click="ArticleShow(article.id)">Просмотреть</my-button>
+        </td>
+      </tr>
+      </tbody>
+    </v-table>
+
+    <div v-else class="no-articles-message">
+      <p>Нет статей.</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -59,5 +65,10 @@ export default {
 </script>
 
 <style>
-
+.no-articles-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #666;
+}
 </style>

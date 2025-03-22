@@ -4,6 +4,7 @@
       <v-spacer></v-spacer>
       <my-button text to="/">Список статей</my-button>
       <my-button text to="/create">Создать статью</my-button>
+      <my-button text to="/filter">Поиск комментариев</my-button>
     </v-app-bar>
 
     <v-main>

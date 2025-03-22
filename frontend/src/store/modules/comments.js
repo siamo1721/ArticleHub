@@ -35,29 +35,38 @@ export default {
         },
     },
     actions: {
-        async getComments({ commit }, articleId) {
+        async getComments({commit}, articleId) {
             const response = await api.getComments(articleId);
             commit('setComments', response.data);
         },
 
-        async createComment({ commit }, { articleId, comment }) {
+        async createComment({commit}, {articleId, comment}) {
             const response = await api.createComment(articleId, comment);
             commit('createComment', response.data);
         },
 
-        async updateComment({ commit }, { id, commentId, comment }) {
+        async updateComment({commit}, {id, commentId, comment}) {
             const response = await api.updateComment(id, commentId, comment);
-            commit('updateComment', { id, commentId, comment: response.data });
+            commit('updateComment', {id, commentId, comment: response.data});
         },
 
-        async deleteComment({ commit }, { id, commentId }) {
+        async deleteComment({commit}, {id, commentId}) {
             await api.deleteComment(id, commentId);
-            commit('deleteComment', { id, commentId });
+            commit('deleteComment', {id, commentId});
         },
 
-        async getCommentsByPeriod({ commit }, { startDate, endDate }) {
-            const response = await api.getCommentsByPeriod(startDate, endDate);
-            commit('setCommentsByPeriod', response.data);
+        async getCommentsByPeriod({commit}, {dateFrom, dateTo}) {
+            if (new Date(dateFrom) > new Date(dateTo)) {
+                alert('Дата начала должна быть меньше или равна дате окончания.');
+                return;
+            }
+            try {
+                const response = await api.getCommentsByPeriod(dateFrom, dateTo);
+                commit('setCommentsByPeriod', response.data);
+            } catch (error) {
+                console.error('Ошибка при загрузке комментариев:', error);
+                commit('setCommentsByPeriod', {});
+            }
         },
     },
 };
